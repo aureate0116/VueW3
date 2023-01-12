@@ -47,6 +47,7 @@ const app = {
         }else if(type==="del"){
           this.tempProduct = {...product};
           delProductModal.show();
+          
         }else if(type==="edit"){
           this.isNew = false;
           this.tempProduct = {...product};
@@ -85,6 +86,11 @@ const app = {
         }).catch(err=>{
           alert(err.response.data.message);
         })
+      },
+      createImgs(){ 
+        //只有一張主圖時，不會有 imagesUrl，要新增一組空的，才能往下新增其他照片
+        this.tempProduct.imagesUrl = [];
+        this.tempProduct.imagesUrl.push('');
       }
   },
   mounted() {

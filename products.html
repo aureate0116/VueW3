@@ -93,7 +93,8 @@
                         新增圖片
                       </button>
                     </div> -->
-                    <div v-if="tempProduct.imagesUrl.length < 5">
+
+                    <div v-if="tempProduct.imagesUrl.length < 5 ">
                       <button class="btn btn-outline-primary btn-sm d-block w-100"
                         @click="tempProduct.imagesUrl.push('')">
                         <!-- 新增一組空的 lable & input -->
@@ -110,8 +111,8 @@
                   </div>
                   
                   <div v-else>
-                    <button class="btn btn-outline-primary btn-sm d-block w-100" >
-                      <!-- @click="createImages" -->
+                    <!-- 預設只有一張主圖時，不會有 imagesUrl，所以要新增一組空的 -->
+                    <button class="btn btn-outline-primary btn-sm d-block w-100" @click="createImgs">
                       新增圖片
                     </button>
                   </div>
