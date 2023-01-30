@@ -24,7 +24,7 @@ const app = {
           .then(res=>{
               this.getProduct();
           }).catch(err=>{
-              alert(err.response.data.message);
+              alert(err.data.message);
               window.location = 'login.html';
           })
       },
@@ -39,13 +39,14 @@ const app = {
       openModal(type,product){
         if(type==="new"){
           this.isNew = true;
-          this.tempProduct = {
+          this.tempProduct = {   
+            //如果先開啟編輯，再新增，this.tempProduct 會帶到資料，所以這個動作意思是要先清空欄位
             imagesUrl: [],
           };
           productModal.show();
           
         }else if(type==="del"){
-          this.tempProduct = {...product};
+          this.tempProduct = {...product}; // 避免位儲存改到原本的值
           delProductModal.show();
           
         }else if(type==="edit"){
@@ -65,7 +66,7 @@ const app = {
             productModal.hide();
             this.getProduct();
           }).catch(err=>{
-            alert(err.response.data.message);
+            alert(err.data.message);
           })
         }else{
           axios.put(`${apiUrl}/api/${path}/admin/product/${this.tempProduct.id}`,{
@@ -73,10 +74,28 @@ const app = {
           }).then(res=>{
             alert(res.data.message);
             productModal.hide();
+            this.getProduct();
           }).catch(err=>{
-            alert(err.response.data.message);
+            //alert(err.response.data.message);
+            alert(err.data.message);
           })
         }
+        //post & put 帶入的資料一致， 差別是post/put & 有沒有帶id
+        // let method = 'post';
+        // let url=``;
+        // if(!this.isNew){
+        //   method = 'put';
+        //   url=``
+        // }
+        // axios[method](url,{data:this.tempProduct}).then(res=>{
+        //   alert(res.data.message);
+        //   productModal.hide();
+        //   this.getProduct();
+        // }).catch(err=>{
+        //   alert(err.response.data.message);
+        // })
+
+
       },
       deleteProduct(){
         axios.delete(`${apiUrl}/api/${path}/admin/product/${this.tempProduct.id}`).then(res=>{
@@ -84,7 +103,7 @@ const app = {
           delProductModal.hide();
           this.getProduct();
         }).catch(err=>{
-          alert(err.response.data.message);
+          alert(err.data.message);
         })
       },
       createImgs(){ 
